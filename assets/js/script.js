@@ -82,3 +82,8 @@ popup.setLngLat(coordinates)
 
   });
 });
+
+$("#map").on("click",function(even){
+
+});
+

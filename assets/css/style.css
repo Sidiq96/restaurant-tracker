@@ -1,3 +1,4 @@
+
 body {
     margin: 0;
     padding: 0;
@@ -34,3 +35,43 @@ body {
     max-width: 400px;
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   }
+
+.main_icon{width: 80px;}
+
+.form_input_section{background-image: url("../images/background.png");height: 235px;padding: 41px 0px;background-position: center;background-repeat: no-repeat;background: blanchedalmond;}
+.form_input_section form{display: flex;justify-content: center;align-items: center;}
+.form_field{
+    width: 60%;
+}
+.form_field label{
+    text-align: center;
+    display: block;
+    font-size: 30px;
+}
+.form_field input{}
+.form_field button{
+    margin: 20px auto;
+    display: block;
+}
+
+/* Resturant Section */
+.restaurant_section{
+    padding: 60px 0px;
+}
+.restaurant_card{
+    border: 1px solid #cfcfcf;
+    margin: 10px 0px;
+}
+.restaurant_card img{
+    width: 100%;
+}
+.restaurant_body{
+    padding: 20px 10px;
+}
+.restaurant_body h3{}
+.restaurant_body p{}
+.restaurant_body input{
+    width: 100%;
+    border: 1px solid #cfcfcfcf;
+}
+.feedback_text{font-weight: bold;}
