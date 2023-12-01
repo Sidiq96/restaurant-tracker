@@ -1,77 +1,102 @@
-
+/* Resetting default margin and padding for the entire page */
 body {
-    margin: 0;
-    padding: 0;
-  }
-
-  #map {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 50%;
-    height: 50%
-  }
-
-
-
-  #searchmap {
-    position: absolute;
-    top: 50%;
-    bottom: 0;
-    width: 50%;
-    height: 50%;
-  }
-
-  #marker {
-    /* background-image: url('https://docs.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg'); */
-    background: blueviolet;
-    background-size: cover;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  .mapboxgl-popup {
-    max-width: 400px;
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  }
-
-.main_icon{width: 80px;}
-
-.form_input_section{background-image: url("../images/background.png");height: 235px;padding: 41px 0px;background-position: center;background-repeat: no-repeat;background: blanchedalmond;}
-.form_input_section form{display: flex;justify-content: center;align-items: center;}
-.form_field{
-    width: 60%;
-}
-.form_field label{
-    text-align: center;
-    display: block;
-    font-size: 30px;
-}
-.form_field input{}
-.form_field button{
-    margin: 20px auto;
-    display: block;
+  margin: 0;
+  padding: 0;
 }
 
-/* Resturant Section */
-.restaurant_section{
-    padding: 60px 0px;
+/* Adding a z-index to the navigation bar to control stacking order */
+nav {
+  /* z-index: 15px; */
 }
-.restaurant_card{
-    border: 1px solid #cfcfcf;
-    margin: 10px 0px;
+
+/* Styling for map containers */
+#map,
+#searchmap {
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 500px;
 }
-.restaurant_card img{
-    width: 100%;
+
+/* Styling for Mapbox popups */
+.mapboxgl-popup {
+  max-width: 400px;
+  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
-.restaurant_body{
-    padding: 20px 10px;
+
+/* Styling for the main icon */
+.main_icon {
+  width: 80px;
 }
-.restaurant_body h3{}
-.restaurant_body p{}
-.restaurant_body input{
-    width: 100%;
-    border: 1px solid #cfcfcfcf;
+
+/* Styling for the form input section */
+.form_input_section {
+  background: blanchedalmond url("../images/background.png") center no-repeat;
+  height: 235px;
+  padding: 41px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 }
-.feedback_text{font-weight: bold;}
+
+/* Styling for form elements within the form input section */
+.form_input_section form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form_field {
+  width: 60%;
+}
+
+.form_field label {
+  text-align: center;
+  display: block;
+  font-size: 30px;
+}
+
+/* Styling for form button */
+.form_field button {
+  margin: 20px auto;
+  display: block;
+}
+
+/* Styling for the restaurant section */
+.restaurant_section {
+  padding: 60px 0;
+}
+
+/* Styling for restaurant cards */
+.restaurant_card {
+  border: 1px solid #cfcfcf;
+  margin: 10px 0;
+}
+
+/* Styling for images within restaurant cards */
+.restaurant_card img {
+  width: 100%;
+}
+
+/* Styling for the body of restaurant cards */
+.restaurant_body {
+  padding: 20px 10px;
+}
+
+/* Styling for text within the body of restaurant cards */
+.restaurant_body h3,
+.restaurant_body p {
+  margin: 0; /* Remove default margin for better spacing */
+}
+
+/* Styling for input within the body of restaurant cards */
+.restaurant_body input {
+  width: 100%;
+  border: 1px solid #cfcfcf;
+}
+
+/* Styling for feedback text */
+.feedback_text {
+  font-weight: bold;
+}
