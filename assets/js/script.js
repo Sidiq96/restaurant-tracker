@@ -62,48 +62,9 @@ popup.setLngLat(coordinates).setText(event.result.text).addTo(map);
     offset: 25,
   });
 });
-<<<<<<< HEAD
 
 
 
 
 
-// Suhaim Code JS
 
-// Function for the Logo
-
-$(".main_icon").on("click",function(){
-  window.location.href = "index.html";
-})
-
-
-// Search Button Function
-
-// var search_btn = $("#search_btn");
-
-// search_btn.on("click",function(event){
-//   event.preventDefault();
-
-// var restaurant_input_name = $("#restaurant_name").val().trim();
-
-// var mapbox_input= $(".mapboxgl-ctrl-geocoder--input");
-// mapbox_input.val(restaurant_input_name);
-// mapbox_input.on("keydown",function(){
-//   mapbox_input.val(restaurant_input_name);
-// })
-// console.log(mapbox_input.text());
-// })
-
-
-
-//  Keydown Function
-var restaurant_input_name = $("#restaurant_name").val().trim();
-
-$("#restaurant_name").on("keydown",function(){
-  var restaurant_input_name = $("#restaurant_name").val().trim();
-  var mapbox_input= $(".mapboxgl-ctrl-geocoder--input");
-  mapbox_input.val(restaurant_input_name);
-  console.log(restaurant_input_name)
-})
-=======
->>>>>>> e0499eb4a8b0c066530cb1708e28174b458889bc
