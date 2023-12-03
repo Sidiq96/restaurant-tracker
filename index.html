@@ -66,27 +66,27 @@
           <div class="col-xl-5 col-12">
             <!-- Form Section -->
             <section class="form_input_section">
-              
-                <form>
-                  <div class="mb-3 form_field col-12">
-                    <label for="restaurant_name" class="form-label">Name Of The Restaurant</label>
-                    <input type="text" class="form-control" id="restaurant_name" />
-                    <button type="submit" id="search_btn" class="btn btn-lg">Search</button>
-                  </div>
-                </form>
-            
+
+              <form id="searchform" action="" method="get">
+                <div class="mb-3 form_field col-12">
+                  <label for="restaurant_name" class="form-label">Name Of The Restaurant</label>
+                  <input type="text" class="form-control" placeholder="Search for restaurants in London" id="restaurant_name"/>
+                  <button type="submit" id="search_btn" class="btn btn-lg">Search</button>
+                </div>
+              </form>
+
             </section>
           </div>
-  
+
           <!-- 2 column -->
           <div class="col-xl-7 col-12">
             <!-- Map and Search Input Section -->
-            <div class="map-section">  
+            <div class="map-section">
                <!-- Map container -->
                <div id="map"></div>
             </div>
           </div>
-  
+
         </div>
       </div>
       </div>
