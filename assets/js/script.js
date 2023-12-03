@@ -2,7 +2,7 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoia3JheXppZWphbWFhIiwiYSI6ImNsbTk3N3liNzBoOXgzcHFxcnYxbzFlZGoifQ.CFAObEgH4I_ADDAdhMOR1Q";
 
   let map;
-//   let geocoder;
+  let geocoder;
 let markers=[];
 
   $(document).ready(function () {
@@ -13,7 +13,7 @@ let markers=[];
       zoom: 9,
     });
 
-    // Initialize Mapbox Geocoder
+    // Mapbox Geocoder
     geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
