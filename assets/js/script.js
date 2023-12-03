@@ -14,7 +14,7 @@ $(document).ready(function () {
     countries: "gb",
   });
 
-// geocoder.hide();
+  // geocoder.hide();
 
   geocoder.on("result", function (event) {
     const coordinates = event.result.geometry.coordinates;
@@ -23,15 +23,13 @@ $(document).ready(function () {
     map.setZoom(12);
 
     // Add a marker at the selected coordinates
-  new mapboxgl.Marker()
-  .setLngLat(coordinates)
-  .setPopup(
-    popup.setText(event.result.text)
-  )
-  .addTo(map);
+    new mapboxgl.Marker()
+      .setLngLat(coordinates)
+      .setPopup(popup.setText(event.result.text))
+      .addTo(map);
 
-// Open the popup
-popup.setLngLat(coordinates).setText(event.result.text).addTo(map);
+    // Open the popup
+    popup.setLngLat(coordinates).setText(event.result.text).addTo(map);
   });
 
   $("#searchform").submit(function (e) {
@@ -53,18 +51,62 @@ popup.setLngLat(coordinates).setText(event.result.text).addTo(map);
   //since we are using mapbox geocoder, we need to add it
   map.addControl(geocoder);
 
-    // once it the map is loaded we hide the co
-    map.once("load", function () {
-        map.removeControl(geocoder);
-      });
+  // once it the map is loaded we hide the co
+  map.once("load", function () {
+    map.removeControl(geocoder);
+  });
 
   const popup = new mapboxgl.Popup({
     offset: 25,
   });
 });
+// Function to fetch restaurant details
+function fetchRestaurant() {
+  let restaurantName = 'Saptami-Mumbai_Maharashtra';
+  const url = 'https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/getRestaurantDetails?restaurantsId=Restaurant_Review-g304554-d8010527-Reviews-' + restaurantName + '&currencyCode=GBR&rapidapi-key=73a6b7e941msh7b32adeb46d86d8p18b277jsn70c5ae8fc490';
 
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      updateRestaurantCard(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
 
+// Function to update restaurant card UI
+function updateRestaurantCard(details) {
+  // Select the container where the restaurant card will be appended
+  const restaurantCard = $('#restaurant_section');
 
+  // Clear previous content in the container
+  restaurantCard.empty();
 
+  // Check if details object has necessary properties
+  if (details && details.overview && details.location) {
+    const restaurantName = details.overview.name;
+    const restaurantDes = details.location.neighborhood_info[0];
 
-
+    // Append a new restaurant card to the container
+    restaurantCard.append(`
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <div class="restaurant_card">
+              <div class="restaurant_body">
+                <h3 class="rest_name">${restaurantName}</h3>
+                <p class="rest_des">${restaurantDes}</p>
+                <p class="feedback_text">FeedBack</p>
+                <input type="text" id="feedback" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `);
+  } else {
+    console.error("Invalid details object:", details);
+  }
+}
