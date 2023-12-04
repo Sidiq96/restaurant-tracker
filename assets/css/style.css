@@ -122,7 +122,7 @@ nav ul li .nav-link {
 .form_field button:hover{
   color:#15B9D4;
   background:white;
- 
+
 }
 
 /* Form Section End*/
@@ -209,6 +209,7 @@ nav ul li .nav-link {
 .feedback_text {
   font-weight: bold;
 }
+<<<<<<< HEAD
 .restaurant_body button{
     background: #262424;
     color: white !important;
@@ -285,4 +286,6 @@ nav ul li .nav-link {
 
   /*  */
 }
+=======
 
+>>>>>>> e0499eb4a8b0c066530cb1708e28174b458889bc

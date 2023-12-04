@@ -93,19 +93,11 @@
             <div class="col-xl-5 col-12">
               <!-- Form Section -->
               <section class="form_input_section">
-                <form>
+                <form id="searchform" action="" method="get">
                   <div class="mb-3 form_field col-12">
-                    <label for="restaurant_name" class="form-label"
-                      >Name Of The Restaurant</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="restaurant_name"
-                    />
-                    <button type="submit" id="search_btn" class="btn btn-lg">
-                      Search
-                    </button>
+                    <label for="restaurant_name" class="form-label">Name Of The Restaurant</label>
+                    <input type="text" class="form-control" placeholder="Search for restaurants in London" id="restaurant_name"/>
+                    <button type="submit" id="search_btn" class="btn btn-lg">Search</button>
                   </div>
                 </form>
               </section>
@@ -173,3 +165,4 @@
     ></script>
   </body>
 </html>
+
