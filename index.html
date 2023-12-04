@@ -117,31 +117,36 @@
     </main>
 
     <!-- Restaurant Details Section -->
-    <section class="restaurant_section d-none">
-      <div class="container">
-        <h2>Restaurant List</h2>
-        <div class="row">
-          <div class="col-4">
+    <section class="restaurant_section ">
+      <div class="container d-none">
+        <h2 class="rest_title">Restaurant Details</h2>
             <!-- Restaurant card -->
             <div class="restaurant_card">
-              <img src="assets/images/restaurant.jpg" alt="" />
-              <div class="restaurant_body">
-                <!-- Restaurant name -->
-                <h3 class="rest_name">Name of the Restaurant</h3>
-                <!-- Restaurant description -->
-                <p class="rest_des">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Maiores quia similique quidem nemo quo ab atque dolorum, eaque
-                  dicta cumque!
-                </p>
-                <!-- Feedback section -->
-                <p class="feedback_text">FeedBack</p>
-                <textarea name="" id="FeedBack_text"></textarea>
-                <button class="btn btn-lg">Submit</button>
+              <div class="row">
+                <div class="col-md-8 col-12">
+                  <div class="restaurant_left_side">
+                    <!-- Restaurant name -->
+                    <h3 class="restaurant_name">Name of the Restaurant</h3>
+                    <p class="restaurant_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolorum molestias modi vitae consectetur libero optio dicta voluptate at dolore.</p>
+                    <ul class="restaurant_ul">
+                       <li><p class="restaurant_hours">saffaf</p></li>
+                       <li><p class="restaurant_number"></p></li>
+                       <li><p class="restaurant_website"><a href="">google</a></p></li>
+                    </ul>
+                    <div class="resturant_feedback_Section">
+                     <h4 class="FeedBack_title">Feedback</h4>
+                     <textarea name="" id="FeedBack_text"></textarea>
+                     <button class="btn btn-lg" id="submit_feedback">Submit</button>
+                    </div>
+                 </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="restaurant_right_side">
+                    <img src="assets/images/restaurant.jpg" alt="" />
+                 </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
       </div>
     </section>
 
