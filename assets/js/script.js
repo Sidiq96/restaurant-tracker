@@ -127,6 +127,16 @@ $(document).ready(function () {
   }
 
 });
+  // Suhaim Code
+  // Function to fetch restaurant details
+  fetchRestaurant();
+  function fetchRestaurant() {
+
+
+  var apiKey="eec2014a26msh690cd1a430a3f1dp18ead0jsn58b826e0a4d7";
+
+  var url = "https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/getRestaurantDetails?restaurantsId=Restaurant_Review-g304554-d8010527-Reviews-Saptami-Mumbai_Maharashtra&currencyCode=USD&rapidapi-key="+ apiKey;
+
 
   // Suhaim Code
   // Function to fetch restaurant details
@@ -136,6 +146,7 @@ $(document).ready(function () {
   var apiKey="eec2014a26msh690cd1a430a3f1dp18ead0jsn58b826e0a4d7";
 
   var url = "https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/getRestaurantDetails?restaurantsId=Restaurant_Review-g304554-d8010527-Reviews-Saptami-Mumbai_Maharashtra&currencyCode=USD&rapidapi-key="+ apiKey;
+
 
 
   fetch(url).then(function(response){
@@ -216,7 +227,7 @@ $(document).ready(function () {
 
   }
 
-  
+
   // Suhaim Code
   // =============================== Local Storage on Submit Button Code ==================== 
 
@@ -245,4 +256,8 @@ $(document).ready(function () {
 var Json_String = JSON.stringify(feedbackData);
 localStorage.setItem("Restaurants",Json_String);
 
+
 })
+
+})
+
