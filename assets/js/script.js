@@ -135,7 +135,13 @@ $(document).ready(function () {
   }
 
  
-  // Suhaim Code
+  
+
+
+});
+
+
+// Suhaim Code
   // Function to fetch restaurant details
   fetchRestaurant();
   function fetchRestaurant() {
@@ -226,7 +232,6 @@ $(document).ready(function () {
   
   // Suhaim Code
   // =============================== Local Storage on Submit Button Code ==================== 
-
   // Function TO save data in local Storage
   $(".restaurant_section").on("click","#submit_feedback",function(event){
   event.preventDefault();
@@ -250,33 +255,33 @@ $(document).ready(function () {
   feedback: FeedBack_text,
   };
 
-// Retrieve existing data from local storage
-var existingData = localStorage.getItem("Restaurants");
+  // Retrieve existing data from local storage
+  var existingData = localStorage.getItem("Restaurants");
 
-// If there is existing data, parse it; otherwise, create an empty array
-var feedbackArray;
+  // If there is existing data, parse it; otherwise, create an empty array
+  var feedbackArray;
 
-if (existingData) {
+  if (existingData) {
   try {
-    feedbackArray = JSON.parse(existingData);
+  feedbackArray = JSON.parse(existingData);
 
-    // Make sure feedbackArray is an array
-    if (!Array.isArray(feedbackArray)) {
-      feedbackArray = [];
-      console.error("existingData is not a valid array.");
-    }
-  } catch (error) {
+  // Make sure feedbackArray is an array
+  if (!Array.isArray(feedbackArray)) {
     feedbackArray = [];
-    console.error("Error parsing existingData:", error);
+    console.error("existingData is not a valid array.");
   }
-} else {
+  } catch (error) {
   feedbackArray = [];
-}
+  console.error("Error parsing existingData:", error);
+  }
+  } else {
+  feedbackArray = [];
+  }
 
-// Add the current feedback to the array
-feedbackArray.push(feedbackData);
+  // Add the current feedback to the array
+  feedbackArray.push(feedbackData);
 
-// Convert the array back to JSON and store it in local storage
-localStorage.setItem("Restaurants", JSON.stringify(feedbackArray));
+  // Convert the array back to JSON and store it in local storage
+  localStorage.setItem("Restaurants", JSON.stringify(feedbackArray));
 
-})
+  });
