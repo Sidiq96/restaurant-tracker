@@ -169,17 +169,63 @@ nav ul li .nav-link {
   padding: 60px 0;
 }
 
+.rest_title{
+    text-align: center;
+    margin-bottom: 40px;
+}
 /* Styling for restaurant cards */
 .restaurant_card {
   border: 1px solid #cfcfcf;
   margin: 10px 0;
-  background: white;
+  background: #444444;
   box-shadow: 5px 6px 21px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  color: white;
 }
-
+.restaurant_left_side{
+    padding: 20px;
+}
+.restaurant_name{
+    font-size: 40px;
+    color: #F89424;
+}
+.restaurant_description{
+    font-size: 18px;
+}
+.restaurant_ul{
+    margin: 0px;
+    padding: 0px;
+}
+.restaurant_ul li{
+    display: inline-block;
+    margin-right: 30px;
+    text-decoration: underline;
+    font-size: 17px;
+}
+.restaurant_address{
+    padding-top: 13px;
+}
+.restaurant_ul a{
+    color: white;
+}
+.resturant_feedback_Section{}
+.resturant_feedback_Section .FeedBack_title{}
+.resturant_feedback_Section textarea{}
+.resturant_feedback_Section button{
+  background: white;
+  color: #444444 !important;
+  margin: 10px 0px;
+  width: 100%;
+  }
+.restaurant_right_side{
+    padding: 10px;
+}
+.restaurant_right_side img{}
 /* Styling for images within restaurant cards */
 .restaurant_card img {
   width: 100%;
+  border: 4px solid white;
+  border-radius: 10px;
 }
 
 /* Styling for the body of restaurant cards */
@@ -188,11 +234,18 @@ nav ul li .nav-link {
 }
 
 /* Styling for text within the body of restaurant cards */
-.restaurant_body h3,
+.restaurant_body h3{}
 .restaurant_body p {
   margin: 0; /* Remove default margin for better spacing */
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
-
+.rest_ul{
+    padding: 15px;
+}
+.rest_ul a{
+   color:white
+}
 /* Styling for input within the body of restaurant cards */
 .restaurant_body input {
   width: 100%;
@@ -209,7 +262,6 @@ nav ul li .nav-link {
 .feedback_text {
   font-weight: bold;
 }
-<<<<<<< HEAD
 .restaurant_body button{
     background: #262424;
     color: white !important;
@@ -284,8 +336,6 @@ nav ul li .nav-link {
     width: 45%;
 }
 
-  /*  */
-}
-=======
 
->>>>>>> e0499eb4a8b0c066530cb1708e28174b458889bc
+}
+
