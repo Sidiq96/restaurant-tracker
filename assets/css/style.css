@@ -1,12 +1,11 @@
 :root {
   --dark-color: #262424;
-  --light-dark-color: #3D3E42;
-  --Primary-color: #FFC86B;
+  --light-dark-color: #3d3e42;
+  --Primary-color: #ffc86b;
   --titles_color: #e84242;
-  --work_area_color: #FFE569;
+  --work_area_color: #ffe569;
   --Navbar_tab_color: #00ebff;
 }
-
 
 /* Resetting default margin and padding for the entire page */
 body {
@@ -14,9 +13,6 @@ body {
   padding: 0;
   background-color: #e7f0ff;
 }
-
-
-
 
 /* Header Section Start */
 header nav {
@@ -29,6 +25,10 @@ header nav .navbar_h1 {
   color: white;
   transition: all 0.2s ease-in-out 0s;
   user-select: none;
+  -webkit-transition: all 0.2s ease-in-out 0s;
+  -moz-transition: all 0.2s ease-in-out 0s;
+  -ms-transition: all 0.2s ease-in-out 0s;
+  -o-transition: all 0.2s ease-in-out 0s;
 }
 
 header nav .navbar_h1:hover {
@@ -47,7 +47,9 @@ nav ul li .nav-link {
   color: white !important;
 }
 
-.navbar-light .navbar-toggler{background-color: white;}
+.navbar-light .navbar-toggler {
+  background-color: white;
+}
 .nav-link:hover {
   transition: all 0.4s ease-in-out 0s;
   color: var(--Primary-color) !important;
@@ -71,7 +73,9 @@ nav ul li .nav-link {
 /* ================================== */
 
 /* Main Section Start */
-#main_section{margin-top: 85px;}
+#main_section {
+  margin-top: 85px;
+}
 /* Main Section End */
 
 /* ======================= */
@@ -95,7 +99,7 @@ nav ul li .nav-link {
   padding: 10px 20px;
   border-radius: 53px;
   margin-top: 45px;
-  background: linear-gradient(45deg, #F89424 0%, #ED1C46 43%, #18ABB5 100%);
+  background: linear-gradient(45deg, #f89424 0%, #ed1c46 43%, #18abb5 100%);
   box-shadow: 5px 6px 21px 3px rgba(0, 0, 0, 0.3);
 }
 
@@ -114,24 +118,22 @@ nav ul li .nav-link {
 .form_field button {
   margin: 20px auto;
   display: block;
-  background: #15B9D4;
+  background: #15b9d4;
   width: 50%;
   color: white;
-  font-weight:600;
+  font-weight: 600;
 }
-.form_field button:hover{
-  color:#15B9D4;
-  background:white;
-
+.form_field button:hover {
+  color: #15b9d4;
+  background: white;
 }
 
 /* Form Section End*/
 /* ================================== */
 
-
 /* Map Section Start */
-.map-section{
-    margin-top: 30px;
+.map-section {
+  margin-top: 30px;
 }
 /* Styling for map containers */
 #map,
@@ -157,21 +159,16 @@ nav ul li .nav-link {
 /* Map Section End */
 /* =============================================== */
 
-
-
-
-
 /* Restaurant section Start */
-
 
 /* Styling for the restaurant section */
 .restaurant_section {
   padding: 60px 0;
 }
 
-.rest_title{
-    text-align: center;
-    margin-bottom: 40px;
+.rest_title {
+  text-align: center;
+  margin-bottom: 40px;
 }
 /* Styling for restaurant cards */
 .restaurant_card {
@@ -182,45 +179,49 @@ nav ul li .nav-link {
   border-radius: 20px;
   color: white;
 }
-.restaurant_left_side{
-    padding: 20px;
+.restaurant_left_side {
+  padding: 20px;
 }
-.restaurant_name{
-    font-size: 40px;
-    color: #F89424;
+.restaurant_name {
+  font-size: 40px;
+  color: #f89424;
 }
-.restaurant_description{
-    font-size: 18px;
+.restaurant_description {
+  font-size: 18px;
 }
-.restaurant_ul{
-    margin: 0px;
-    padding: 0px;
+.restaurant_ul {
+  margin: 0px;
+  padding: 0px;
 }
-.restaurant_ul li{
-    display: inline-block;
-    margin-right: 30px;
-    text-decoration: underline;
-    font-size: 17px;
+.restaurant_ul li {
+  display: inline-block;
+  margin-right: 30px;
+  text-decoration: underline;
+  font-size: 17px;
 }
-.restaurant_address{
-    padding-top: 13px;
+.restaurant_address {
+  padding-top: 13px;
 }
-.restaurant_ul a{
-    color: white;
+.restaurant_ul a {
+  color: white;
 }
-.resturant_feedback_Section{}
-.resturant_feedback_Section .FeedBack_title{}
-.resturant_feedback_Section textarea{}
-.resturant_feedback_Section button{
+.resturant_feedback_Section {
+}
+.resturant_feedback_Section .FeedBack_title {
+}
+.resturant_feedback_Section textarea {
+}
+.resturant_feedback_Section button {
   background: white;
   color: #444444 !important;
   margin: 10px 0px;
   width: 100%;
-  }
-.restaurant_right_side{
-    padding: 10px;
 }
-.restaurant_right_side img{}
+.restaurant_right_side {
+  padding: 10px;
+}
+.restaurant_right_side img {
+}
 /* Styling for images within restaurant cards */
 .restaurant_card img {
   width: 100%;
@@ -234,108 +235,99 @@ nav ul li .nav-link {
 }
 
 /* Styling for text within the body of restaurant cards */
-.restaurant_body h3{}
+.restaurant_body h3 {
+}
 .restaurant_body p {
   margin: 0; /* Remove default margin for better spacing */
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.rest_ul{
-    padding: 15px;
+.rest_ul {
+  padding: 15px;
 }
-.rest_ul a{
-   color:white
+.rest_ul a {
+  color: white;
 }
 /* Styling for input within the body of restaurant cards */
 .restaurant_body input {
   width: 100%;
   border: 1px solid #cfcfcf;
 }
-#FeedBack_text{
-    width: 100%;
-    height: 100px;
-    resize: none;
-    margin-top: 10px;
+#FeedBack_text {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  margin-top: 10px;
 }
 
 /* Styling for feedback text */
 .feedback_text {
   font-weight: bold;
 }
-.restaurant_body button{
-    background: #262424;
-    color: white !important;
-    margin: 10px 0px;
-    width: 100%;
+.restaurant_body button {
+  background: #262424;
+  color: white !important;
+  margin: 10px 0px;
+  width: 100%;
 }
-
 
 /* Restaurant section End */
 /* ======================================= */
 
-
 /* Second Page Restaurant Css Start */
-.restaurants_list{
-    margin-top: 72px;
+.restaurants_list {
+  margin-top: 72px;
 }
-.restaurants_list h2{
-    text-align: center;
-    font-size: 40px;
+.restaurants_list h2 {
+  text-align: center;
+  font-size: 40px;
 }
-.restaurants_list h2::after{
-  content:"";
-  height:2px;
-  width:15%;
-  display:block;
-  margin:auto;
-  background-color:#262424;
+.restaurants_list h2::after {
+  content: "";
+  height: 2px;
+  width: 15%;
+  display: block;
+  margin: auto;
+  background-color: #262424;
 }
 /* Second Page Restaurant Css End */
-
-
-
 
 /* =================== Media Queries ========================== */
 
 /* Max width 992 */
-@media screen and (max-width:992px){
+@media screen and (max-width: 992px) {
   .main_icon {
     width: 35%;
-}
+  }
 
   /*Navbar Section 992px Start  */
-   nav ul {
-      padding-top: 20px;
+  nav ul {
+    padding-top: 20px;
   }
 
   nav ul li .nav-link {
-      text-align: center;
+    text-align: center;
   }
 
   nav ul li .nav-link::after {
-      content: "";
-      width: 100%;
-      height: 2px;
-      background-color: rgb(228, 242, 254);
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: rgb(228, 242, 254);
   }
 
   nav ul li .nav-link:hover::after {
-      content: "";
-      width: 100%;
-      height: 2px;
-      background-color: var(--Primary-color);
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: var(--Primary-color);
   }
-    /*Navbar Section 992px end  */
+  /*Navbar Section 992px end  */
 }
-
-
 
 /* max width 767 */
-@media screen and (max-width:992px){
+@media screen and (max-width: 992px) {
   .main_icon {
     width: 45%;
+  }
 }
-
-
-}
-
