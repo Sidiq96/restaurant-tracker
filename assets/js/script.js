@@ -42,16 +42,6 @@ $(document).ready(function () {
     map.setCenter(coordinates);
     map.setZoom(11);
 
-    // Clear existing markers
-    removeMarkers();
-
-    // Add new markers
-    const newMarker = new mapboxgl.Marker()
-      .setLngLat(coordinates)
-      .setPopup(new mapboxgl.Popup().setText(event.result.text))
-      .addTo(map);
-
-    markers.push(newMarker);
   });
 
   // Event listener for your form submission
@@ -111,12 +101,27 @@ $(document).ready(function () {
           const placeCoordinates = place.geometry.coordinates;
 
           // Add markers for each place
-          const newMarker = new mapboxgl.Marker()
-            .setLngLat(placeCoordinates)
-            .setPopup(new mapboxgl.Popup().setText(place.text))
-            .addTo(map);
+          // const newMarker = new mapboxgl.Marker()
+          //   .setLngLat(placeCoordinates)
+          //   .setPopup(new mapboxgl.Popup()
+          //   .setHTML(`<a href="index.html#restaurant-card">${place.text}</a>`))
 
-          markers.push(newMarker);
+
+          //   .addTo(map);
+
+          // markers.push(newMarker);
+
+          const newMarker = new mapboxgl.Marker()
+          .setLngLat(placeCoordinates)
+          .setPopup(
+            new mapboxgl.Popup().setHTML(
+              `<a href="index.html#restaurant-card">${place.text}</a>`
+            )
+          )
+          .addTo(map);
+
+        markers.push(newMarker);
+
 
 
         });
@@ -151,7 +156,7 @@ $(document).ready(function () {
   }
 
 
-  // Suhaim Code 
+  // Suhaim Code
   // Function to update restaurant card UI
   function display_restaurant_html(details) {
   var restaurant = details.data;
@@ -216,9 +221,9 @@ $(document).ready(function () {
 
   }
 
-  
+
   // Suhaim Code
-  // =============================== Local Storage on Submit Button Code ==================== 
+  // =============================== Local Storage on Submit Button Code ====================
 
   // Function TO save data in local Storage
   $(".restaurant_section").on("click","#submit_feedback",function(event){
