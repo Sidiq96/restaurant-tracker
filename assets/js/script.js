@@ -45,13 +45,13 @@ $(document).ready(function () {
     // Clear existing markers
     removeMarkers();
 
-    // Add new markers
-    const newMarker = new mapboxgl.Marker()
-      .setLngLat(coordinates)
-      .setPopup(new mapboxgl.Popup().setText(event.result.text))
-      .addTo(map);
+    // // Add new markers
+    // const newMarker = new mapboxgl.Marker()
+    //   .setLngLat(coordinates)
+    //   .setPopup(new mapboxgl.Popup().setText(event.result.text))
+    //   .addTo(map);
 
-    markers.push(newMarker);
+    // markers.push(newMarker);
   });
 
   // Event listener for your form submission
@@ -122,11 +122,15 @@ $(document).ready(function () {
 
           // Add markers for each place
           const newMarker = new mapboxgl.Marker()
-            .setLngLat(placeCoordinates)
-            .setPopup(new mapboxgl.Popup().setText(place.text))
-            .addTo(map);
+          .setLngLat(placeCoordinates)
+          .setPopup(
+            new mapboxgl.Popup().setHTML(
+              `<a href="#restaurant-card">${place.text}</a>`
+            )
+          )
+          .addTo(map);
 
-          markers.push(newMarker);
+        markers.push(newMarker);
         });
       })
       .catch((error) => {
@@ -134,8 +138,8 @@ $(document).ready(function () {
       });
   }
 
- 
-  
+
+
 
 
 });
@@ -164,7 +168,7 @@ $(document).ready(function () {
   }
 
 
-  // Suhaim Code 
+  // Suhaim Code
   // Function to update restaurant card UI
   function display_restaurant_html(details) {
   var restaurant = details.data;
@@ -229,9 +233,9 @@ $(document).ready(function () {
 
   }
 
-  
+
   // Suhaim Code
-  // =============================== Local Storage on Submit Button Code ==================== 
+  // =============================== Local Storage on Submit Button Code ====================
   // Function TO save data in local Storage
   $(".restaurant_section").on("click","#submit_feedback",function(event){
   event.preventDefault();
