@@ -227,6 +227,7 @@ nav ul li .nav-link {
   width: 100%;
   border: 4px solid white;
   border-radius: 10px;
+  height: 200px;
 }
 
 /* Styling for the body of restaurant cards */
