@@ -1,19 +1,16 @@
 // Suhaim Code
 // Function to retrive data from local Storage
 var restaurant = JSON.parse(localStorage.getItem("Restaurants"));
-console.log(restaurant)
+console.log(restaurant);
 
-console.log(restaurant.length)
+console.log(restaurant.length);
 display_restaurant_data(restaurant);
 
-    // Function to update restaurant card UI
-    function display_restaurant_data(restaurant) {
-  
-    for(var i=0; i<restaurant.length; i++)
-    {
-
+// Function to update restaurant card UI
+function display_restaurant_data(restaurant) {
+  for (var i = 0; i < restaurant.length; i++) {
     // Select the container where the restaurant card will be appended
-    var rest_row = $('.rest-row');
+    var rest_row = $(".rest-row");
 
     // Getting value from the api
     var restaurantName = restaurant[i].name;
@@ -22,10 +19,9 @@ display_restaurant_data(restaurant);
 
     var restaurant_hours = restaurant[i].hours;
 
-    var restaurant_website =  restaurant[i].website;
+    var restaurant_website = restaurant[i].website;
     var restaurant_photo = restaurant[i].photo;
     var restaurant_feedback = restaurant[i].feedback;
-
 
     // Append a new restaurant card to the container
     rest_row.append(`
@@ -49,6 +45,5 @@ display_restaurant_data(restaurant);
     </div>
     </div>
     `);
-
-    }
-    }
+  }
+}
