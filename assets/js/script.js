@@ -26,6 +26,7 @@ $(document).ready(function () {
     center: [-0.127647, 51.537322],
     zoom:11,
   });
+
 });
 
 
@@ -77,20 +78,25 @@ $(document).ready(function () {
   var restaurant_address = restaurant.full_address;
   var restaurantDes = restaurant.about.summary;
 
+  // =======================
   // For In hours string remove today
-  var restaurant_hours = restaurant.working_hours.Friday[0];
+  var restaurant_hours = restaurant.working_hours;
 
 
-// Replace "Today" with an empty string
 
-  var restaurant_hours = "Hours " + restaurant_hours;;
+
+
+// =============
   var restaurant_number = restaurant.phone_number;
   var restaurant_website =  restaurant.website;
 
-
+  
+// getting the photo url from api
  var restaurant_photo = restaurant.photos_sample[0].photo_url_large;
 
 
+
+//  coordinate for to use in mapbox api
 var customerLatitude = restaurant.latitude;
 var customerLongitude = restaurant.longitude;
 zoomToLocation(customerLatitude, customerLongitude, restaurantName, restaurant_website);
@@ -110,7 +116,7 @@ zoomToLocation(customerLatitude, customerLongitude, restaurantName, restaurant_w
             <p class="restaurant_address">${restaurant_address}</p>
             <p class="restaurant_description">${restaurantDes}</p>
             <ul class="restaurant_ul">
-                <li><p class="restaurant_hours">${restaurant_hours}</p></li>
+            <li><p class="restaurant_hours"><a href="#modal_timetable" rel="modal:open">Opening Hours</a></p></li>
                 <li><p class="restaurant_number">${restaurant_number}</p></li>
                 <li><p class="restaurant_website"><a href="${restaurant_website}" class="restaurant_website_link" target="_blank">Website</a></p></li>
             </ul>
@@ -129,11 +135,43 @@ zoomToLocation(customerLatitude, customerLongitude, restaurantName, restaurant_w
       </div>
     </div>
   </div>
-  `);
 
+     
+  `);
+  // assign value to modal function
+  display_modal(restaurantName, restaurant_photo, restaurant_hours);
   }
 
+  // Function to show opening hours of restaurant
+  function display_modal(restaurantName, restaurant_photo, restaurant_hours){
 
+  $(".modal_section").append(` 
+  // Modal Code
+  <div id="modal_timetable" class="modal">
+  <h3 class="modal_title">${restaurantName}</h3>
+  <img src="${restaurant_photo}" class="modal_restaurant_image" alt="Restaurant Image" />
+  <div class="mdl_body">
+  <h4 class="opening_hour">Opening Hours</h4>
+  </div>
+  </div>`
+  );
+
+  var modal_body=$(".mdl_body");
+
+  // Loop through each day
+  for (var day in restaurant_hours) {
+  // Get the array of hours for the current day
+  var hoursArray = restaurant_hours[day];
+
+  // Loop through the hours for the current day and print each one
+  for (var i = 0; i < hoursArray.length; i++) {
+    var modal_li =$("<li>");
+    modal_li.text(day + " " + hoursArray[i]);
+    modal_li.attr("class","modal_li")
+    modal_body.append(modal_li);
+  }
+  }
+  }
 
   // =============================== Local Storage on Submit Button Code ====================
   // Function TO save data in local Storage
