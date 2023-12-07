@@ -1,22 +1,30 @@
-mapboxgl.accessToken =
-  "pk.eyJ1Ijoia3JheXppZWphbWFhIiwiYSI6ImNsbTk3N3liNzBoOXgzcHFxcnYxbzFlZGoifQ.CFAObEgH4I_ADDAdhMOR1Q";
+
+// Header logo Function
+$(".main_icon").on("click",function(){
+  window.location.href = "index.html";
+});
+
+
+
+mapboxgl.accessToken ="pk.eyJ1Ijoia3JheXppZWphbWFhIiwiYSI6ImNsbTk3N3liNzBoOXgzcHFxcnYxbzFlZGoifQ.CFAObEgH4I_ADDAdhMOR1Q";
 
 let map;
 let geocoder;
 let markers = [];
 
-// Function to remove existing markers from the map
-function removeMarkers() {
-  markers.forEach((marker) => marker.remove());
-  markers = [];
-}
+// // Function to remove existing markers from the map
+// function removeMarkers() {
+//   markers.forEach((marker) => marker.remove());
+//   markers = [];
+// }
 
+// On load to show the map
 $(document).ready(function () {
   map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/streets-v12",
     center: [-0.127647, 51.537322],
-    zoom: 11,
+    zoom:11,
   });
 
   // Initializes the Mapbox Geocoder
@@ -26,10 +34,7 @@ $(document).ready(function () {
     marker: true,
     placeholder: "Search restaurants in London",
     bbox: [-0.351708, 51.384527, 0.153177, 51.669993],
-    proximity: {
-      longitude: -0.1276,
-      latitude: 51.5074,
-    },
+    countries: "gb",
   });
 
   // Adds geocoder to the map
@@ -79,43 +84,50 @@ $(document).ready(function () {
     var londonBbox = [-0.510375, 51.50676, 0.334015, 51.691874]; // Bounding box for London
     let apiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
       searchText
-    )}.json?access_token=${
-      mapboxgl.accessToken
-    }&type=poi&categories=restaurant,resturants,food,alchol,beer,wine&bbox=${londonBbox.join(
+    )}.json?access_token=${mapboxgl.accessToken}&bbox=${londonBbox.join(
       ","
-    )}&limit=10000`;
+    )}&categories=restaurant&type=poi`;
 
     fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        // Filter results to only include places within the London bounding box
-        const filteredPlaces = data.features.filter((place) => {
-          const isRestaurant =
-            place.properties.category &&
-            place.properties.category.includes("food");
 
-          const coordinates = place.geometry.coordinates;
-          const londonBB =
-            coordinates[0] >= londonBbox[0] &&
-            coordinates[0] <= londonBbox[2] &&
-            coordinates[1] >= londonBbox[1] &&
-            coordinates[1] <= londonBbox[3];
+    .then((response) => response.json())
+    .then((data) => {
+      // Filter results to only include places within the London bounding box
+      const filteredPlaces = data.features.filter((place) => {
+
+        const isRestaurant = place.properties.category.includes('restaurant');
+        const coordinates = place.geometry.coordinates;
+        const londonBB =
+          coordinates[0] >= londonBbox[0] &&
+          coordinates[0] <= londonBbox[2] &&
+          coordinates[1] >= londonBbox[1] &&
+          coordinates[1] <= londonBbox[3]
 
           return isRestaurant && londonBB;
-        });
 
-        // Display markers for each place found within the London bounding box
-        filteredPlaces.forEach((place) => {
-          const placeCoordinates = place.geometry.coordinates;
+      });
 
-          // Add markers for each place
-          const newMarker = new mapboxgl.Marker()
-            .setLngLat(placeCoordinates)
-            .setPopup(new mapboxgl.Popup().setText(place.text))
-            .addTo(map);
+      // Display markers for each place found within the London bounding box
+      filteredPlaces.forEach((place) => {
+        const placeCoordinates = place.geometry.coordinates;
 
-          markers.push(newMarker);
-        });
+
+        // Add markers for each place
+        const newMarker = new mapboxgl.Marker()
+          .setLngLat(placeCoordinates)
+          .setPopup(new mapboxgl.Popup().setText(place.text))
+          .addTo(map);
+
+// Suhaim Code
+  // Function to fetch restaurant details
+  // fetchRestaurant();
+  function fetchRestaurant() {
+
+
+        markers.push(newMarker);
+
+
+      });
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -148,13 +160,49 @@ function fetchRestaurant() {
     });
 }
 
+
 // Suhaim Code
 // Function to update restaurant card UI
 function display_restaurant_html(details) {
   var restaurant = details.data;
   console.log(restaurant);
+
+  // Suhaim Code
+  // function to get value from input field
+  $("#search_btn").on("click",function(){
+    var restaurant_name = $("#restaurant_name").val().trim();
+    fetch_restaurant_details(restaurant_name);
+  });
+
+  // Function to fetch data on the base of place id
+  function fetch_restaurant_details(restaurant_name){
+  var apiKey="9e74ecab5amshd82c9fc57f9997dp126f51jsnfe476470f337";
+
+  var url = "https://local-business-data.p.rapidapi.com/search?query="+restaurant_name+"&language=en&rapidapi-key="+apiKey;
+
+
+  fetch(url).then(function(response){
+  return response.json();
+  })
+  .then(function(data){
+    var result = data.data[0];
+    console.log(result);
+
+    display_restaurant_html(result);
+  })
+  .catch(function(error){
+  console.error(error)
+  });
+  }
+
+  // Suhaim Code
+  // Function to update restaurant card UI
+  function display_restaurant_html(details) {
+  var restaurant = details;
+
+
   // Select the container where the restaurant card will be appended
-  var restaurantsection = $(".restaurant_section");
+  var restaurantsection = $('.restaurant_section');
 
   // Clear previous content in the container
   restaurantsection.empty();
@@ -165,8 +213,9 @@ function display_restaurant_html(details) {
   var restaurantDes = restaurant.location.description;
 
   // For In hours string remove today
-  var restaurant_hours = restaurant.hours.hoursTodayText;
-  let originalString = restaurant_hours;
+  var restaurant_hours = restaurant.working_hours.Friday[0];
+
+
 
   // Replace "Today" with an empty string
   let modifiedString = originalString.replace("Today", "");
@@ -174,6 +223,19 @@ function display_restaurant_html(details) {
   var restaurant_number = restaurant.location.phone;
   var restaurant_website = restaurant.location.website;
   var restaurant_photo = restaurant.location.photo.images.original.url;
+
+// Replace "Today" with an empty string
+
+  var restaurant_hours = "Hours " + restaurant_hours;;
+  var restaurant_number = restaurant.phone_number;
+  var restaurant_website =  restaurant.website;
+
+
+ var restaurant_photo = restaurant.photos_sample[0].photo_url_large;
+
+
+
+
 
   // Append a new restaurant card to the container
   restaurantsection.append(`
@@ -191,7 +253,7 @@ function display_restaurant_html(details) {
             <ul class="restaurant_ul">
                 <li><p class="restaurant_hours">${restaurant_hours}</p></li>
                 <li><p class="restaurant_number">${restaurant_number}</p></li>
-                <li><p class="restaurant_website"><a href="${restaurant_website}">Website</a></p></li>
+                <li><p class="restaurant_website"><a href="${restaurant_website}" class="restaurant_website_link" target="_blank">Website</a></p></li>
             </ul>
             <div class="resturant_feedback_Section">
               <h4 class="FeedBack_title">Feedback</h4>
@@ -202,40 +264,46 @@ function display_restaurant_html(details) {
         </div>
         <div class="col-md-4 col-12">
           <div class="restaurant_right_side">
-            <img src="${restaurant_photo}" alt="Restaurant Image" />
+            <img src="${restaurant_photo}" class="restaurant_photo" alt="Restaurant Image" />
           </div>
         </div>
       </div>
     </div>
   </div>
   `);
-}
 
-// Suhaim Code
-// =============================== Local Storage on Submit Button Code ====================
+  }
 
-// Function TO save data in local Storage
-$(".restaurant_section").on("click", "#submit_feedback", function (event) {
+
+
+  // =============================== Local Storage on Submit Button Code ====================
+  // Function TO save data in local Storage
+  $(".restaurant_section").on("click","#submit_feedback",function(event){
   event.preventDefault();
   console.log("submit");
-  var restaurant_name = $(".restaurant_name");
-  var restaurant_description = $(".restaurant_description");
-  var restaurant_hours = $(".restaurant_hours");
-  var restaurant_website = $(".restaurant_website");
-  var restaurant_photo = $(".restaurant_photo");
+  var restaurant_name = $(".restaurant_name").text();
+  var restaurant_description = $(".restaurant_description").text();
+  var restaurant_hours = $(".restaurant_hours").text();
+  var restaurant_website = $(".restaurant_website_link").attr("href");
+  var restaurant_photo = $(".restaurant_photo").attr("src");
 
-  var FeedBack_text = $("#FeedBack_text");
+  var FeedBack_text= $("#FeedBack_text").val();
 
+  $("#FeedBack_text").val("");
   // Create an object to represent the current feedback
   var feedbackData = {
-    name: restaurant_name,
-    description: restaurant_description,
-    hours: restaurant_hours,
-    website: restaurant_website,
-    photo: restaurant_photo,
-    feedback: FeedBack_text,
+  name: restaurant_name,
+  description: restaurant_description,
+  hours: restaurant_hours,
+  website: restaurant_website,
+  photo: restaurant_photo,
+  feedback: FeedBack_text,
   };
 
   var Json_String = JSON.stringify(feedbackData);
   localStorage.setItem("Restaurants", Json_String);
 });
+
+
+
+
