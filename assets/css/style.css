@@ -206,7 +206,7 @@ nav ul li .nav-link {
   color: white;
 }
 .rest-row .restaurant_card{
-    height: 695px;
+    height: 710px;
 }
 .restaurant_left_side {
   padding: 20px;
@@ -318,12 +318,17 @@ nav ul li .nav-link {
 
 /* =================== Media Queries ========================== */
 
+
+@media screen and (max-width:1200px){
+  .rest-row .restaurant_card{height:auto}
+  
+}
 /* Max width 992 */
 @media screen and (max-width: 992px) {
   .main_icon {
     width: 35%;
   }
-
+.rest-row .restaurant_card{height:auto}
   /*Navbar Section 992px Start  */
   nav ul {
     padding-top: 20px;
