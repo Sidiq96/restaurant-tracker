@@ -26,7 +26,10 @@ $(document).ready(function () {
     marker: true,
     placeholder: "Search restaurants in London",
     bbox: [-0.351708, 51.384527, 0.153177, 51.669993],
-    countries: "gb",
+    proximity: {
+      longitude: -0.1276,
+      latitude: 51.5074,
+    },
   });
 
   // Adds geocoder to the map
@@ -76,50 +79,43 @@ $(document).ready(function () {
     var londonBbox = [-0.510375, 51.50676, 0.334015, 51.691874]; // Bounding box for London
     let apiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
       searchText
-    )}.json?access_token=${mapboxgl.accessToken}&bbox=${londonBbox.join(
+    )}.json?access_token=${
+      mapboxgl.accessToken
+    }&type=poi&categories=restaurant,resturants,food,alchol,beer,wine&bbox=${londonBbox.join(
       ","
-    )}&categories=restaurant&type=poi`;
+    )}&limit=10000`;
 
     fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        // Filter results to only include places within the London bounding box
+        const filteredPlaces = data.features.filter((place) => {
+          const isRestaurant =
+            place.properties.category &&
+            place.properties.category.includes("food");
 
-    .then((response) => response.json())
-    .then((data) => {
-      // Filter results to only include places within the London bounding box
-      const filteredPlaces = data.features.filter((place) => {
-
-        const isRestaurant = place.properties.category.includes('restaurant');
-        const coordinates = place.geometry.coordinates;
-        const londonBB =
-          coordinates[0] >= londonBbox[0] &&
-          coordinates[0] <= londonBbox[2] &&
-          coordinates[1] >= londonBbox[1] &&
-          coordinates[1] <= londonBbox[3]
+          const coordinates = place.geometry.coordinates;
+          const londonBB =
+            coordinates[0] >= londonBbox[0] &&
+            coordinates[0] <= londonBbox[2] &&
+            coordinates[1] >= londonBbox[1] &&
+            coordinates[1] <= londonBbox[3];
 
           return isRestaurant && londonBB;
+        });
 
-      });
+        // Display markers for each place found within the London bounding box
+        filteredPlaces.forEach((place) => {
+          const placeCoordinates = place.geometry.coordinates;
 
-      // Display markers for each place found within the London bounding box
-      filteredPlaces.forEach((place) => {
-        const placeCoordinates = place.geometry.coordinates;
+          // Add markers for each place
+          const newMarker = new mapboxgl.Marker()
+            .setLngLat(placeCoordinates)
+            .setPopup(new mapboxgl.Popup().setText(place.text))
+            .addTo(map);
 
-
-        // Add markers for each place
-        const newMarker = new mapboxgl.Marker()
-          .setLngLat(placeCoordinates)
-          .setPopup(new mapboxgl.Popup().setText(place.text))
-          .addTo(map);
-
-// Suhaim Code
-  // Function to fetch restaurant details
-  // fetchRestaurant();
-  function fetchRestaurant() {
-
-
-        markers.push(newMarker);
-
-
-      });
+          markers.push(newMarker);
+        });
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -152,47 +148,11 @@ function fetchRestaurant() {
     });
 }
 
-
 // Suhaim Code
 // Function to update restaurant card UI
 function display_restaurant_html(details) {
   var restaurant = details.data;
   console.log(restaurant);
-
-  // Suhaim Code
-  // function to get value from input field
-  $("#search_btn").on("click",function(){
-    var restaurant_name = $("#restaurant_name").val().trim();
-    fetch_restaurant_details(restaurant_name);
-  });
-
-  // Function to fetch data on the base of place id
-  function fetch_restaurant_details(restaurant_name){
-  var apiKey="9e74ecab5amshd82c9fc57f9997dp126f51jsnfe476470f337";
-
-  var url = "https://local-business-data.p.rapidapi.com/search?query="+restaurant_name+"&language=en&rapidapi-key="+apiKey;
-
-
-  fetch(url).then(function(response){
-  return response.json();
-  })
-  .then(function(data){
-    var result = data.data[0];
-    console.log(result);
-    
-    display_restaurant_html(result);
-  })
-  .catch(function(error){
-  console.error(error)
-  });
-  }
-
-  // Suhaim Code
-  // Function to update restaurant card UI
-  function display_restaurant_html(details) {
-  var restaurant = details;
-
-
   // Select the container where the restaurant card will be appended
   var restaurantsection = $(".restaurant_section");
 
@@ -200,14 +160,13 @@ function display_restaurant_html(details) {
   restaurantsection.empty();
 
   // Getting value from the api
-  var restaurantName = restaurant.name;
-  var restaurant_address = restaurant.full_address;
-  var restaurantDes = restaurant.about.summary;
+  var restaurantName = restaurant.location.name;
+  var restaurant_address = restaurant.location.address;
+  var restaurantDes = restaurant.location.description;
 
   // For In hours string remove today
-  var restaurant_hours = restaurant.working_hours.Friday[0];
-
-
+  var restaurant_hours = restaurant.hours.hoursTodayText;
+  let originalString = restaurant_hours;
 
   // Replace "Today" with an empty string
   let modifiedString = originalString.replace("Today", "");
@@ -216,19 +175,6 @@ function display_restaurant_html(details) {
   var restaurant_website = restaurant.location.website;
   var restaurant_photo = restaurant.location.photo.images.original.url;
 
-// Replace "Today" with an empty string
-
-  var restaurant_hours = "Hours " + restaurant_hours;;
-  var restaurant_number = restaurant.phone_number;
-  var restaurant_website =  restaurant.website;
-
-
- var restaurant_photo = restaurant.photos_sample[0].photo_url_large;
-
-
- 
-
-
   // Append a new restaurant card to the container
   restaurantsection.append(`
   <div class="container">
@@ -236,7 +182,7 @@ function display_restaurant_html(details) {
     <!-- Restaurant card -->
     <div class="restaurant_card">
       <div class="row">
-        <div class="col-lg-8 col-md-12">
+        <div class="col-md-8 col-12">
           <div class="restaurant_left_side">
             <!-- Restaurant name -->
             <h3 class="restaurant_name">${restaurantName}</h3>
@@ -254,7 +200,7 @@ function display_restaurant_html(details) {
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-12 ">
+        <div class="col-md-4 col-12">
           <div class="restaurant_right_side">
             <img src="${restaurant_photo}" alt="Restaurant Image" />
           </div>
@@ -293,7 +239,3 @@ $(".restaurant_section").on("click", "#submit_feedback", function (event) {
   var Json_String = JSON.stringify(feedbackData);
   localStorage.setItem("Restaurants", Json_String);
 });
-
-
-
-
