@@ -20,6 +20,7 @@ header nav {
   padding: 10px 0px;
   border-bottom: 2px solid var(--Primary-color);
 }
+nav.fixed-top{z-index: 1;}
 
 header nav .navbar_h1 {
   color: white;
@@ -70,6 +71,31 @@ nav ul li .nav-link {
 }
 /* Header section End */
 
+
+/* modal */
+.blocker{z-index: 2;}
+.modal a.close-modal{top: 1.5px;right: 2.5px;}
+.modal_restaurant_image{width: 100%;border: 4px solid white;}
+.modal_title{color: #f89424;font-size: 30px;}
+.opening_hour{text-align: center;margin: 20px 0px;}
+
+.opening_hour:after{content: "";
+  height: 3px;
+  width: 15%;
+  display: block;
+  margin: auto;
+  background-color: #262424;}
+.modal_li{
+    list-style: none;
+    background: #F89424;
+    display: block;
+    margin: 10px;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    border-radius: 20px;
+    padding: 5px;
+}
 /* ================================== */
 
 /* Main Section Start */
@@ -208,12 +234,7 @@ nav ul li .nav-link {
 .restaurant_ul a {
   color: white;
 }
-.resturant_feedback_Section {
-}
-.resturant_feedback_Section .FeedBack_title {
-}
-.resturant_feedback_Section textarea {
-}
+
 .resturant_feedback_Section button {
   background: white;
   color: #444444 !important;
@@ -223,8 +244,7 @@ nav ul li .nav-link {
 .restaurant_right_side {
   padding: 10px;
 }
-.restaurant_right_side img {
-}
+
 /* Styling for images within restaurant cards */
 .restaurant_card img {
   width: 100%;
