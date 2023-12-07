@@ -8,8 +8,16 @@
 var restaurant = JSON.parse(localStorage.getItem("Restaurants"));
 console.log(restaurant)
 
-console.log(restaurant.length)
-display_restaurant_data(restaurant);
+
+
+
+// Check if the 'restaurant' array is not empty before displaying data
+if (restaurant && restaurant.length > 0) {
+  display_restaurant_data(restaurant);
+} else {
+  // If the array is empty, display a message or handle it as needed
+  console.log("No restaurant data found");
+}
 
 // Function to update restaurant card UI
 function display_restaurant_data(restaurant) {
@@ -24,8 +32,6 @@ var rest_row = $('.rest-row');
 var restaurantName = restaurant[i].name;
 
 var restaurantDes = restaurant[i].description;
-
-var restaurant_hours = restaurant[i].hours;
 
 var restaurant_website =  restaurant[i].website;
 var restaurant_photo = restaurant[i].photo;
@@ -44,7 +50,6 @@ rest_row.append(`
 <!-- Restaurant description -->
 <p class="rest_des">${restaurantDes}</p>
 <ul class="rest_ul">
-<li><p class="rest_hours">${restaurant_hours}</p></li>
 <li><a href="${restaurant_website}">Website</a></li>
 </ul>
 <!-- Feedback section -->
