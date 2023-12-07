@@ -43,7 +43,7 @@ $(document).ready(function () {
 
   // Function to fetch data on the base of place id
   function fetch_restaurant_details(restaurant_name){
-  var apiKey="ea89375d49msh28f2b496d1b332dp1579e6jsnee5b0673239d";
+  var apiKey="9888d85fa0msh0482bab6a69b4cfp140d5fjsn05ad00d194c0";
 
   var url = "https://local-business-data.p.rapidapi.com/search?query="+restaurant_name+"london&language=en&rapidapi-key="+apiKey;
 
