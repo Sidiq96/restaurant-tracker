@@ -29,21 +29,86 @@ $(document).ready(function () {
 
 });
 
+function performSearch(searchText) {
+  var londonBbox = [-0.510375, 51.50676, 0.334015, 51.691874]; // Bounding box for London
+  let apiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+    searchText
+  )}.json?access_token=${mapboxgl.accessToken}&bbox=${londonBbox.join(
+    ","
+  )}&categories=restaurant&type=poi&limit=7`;
 
+  fetch(apiUrl)
+
+  .then((response) => response.json())
+  .then((data) => {
+    // Filter results to only include places within the London bounding box
+    const filteredPlaces = data.features.filter((place) => {
+      const category = place.properties && place.properties.category; // Check if category exists
+      const isRestaurant = category && category.includes('restaurant'); // Check if category includes 'restaurant'
+
+      if (!category || !isRestaurant) {
+        return false; // Skip if category doesn't exist or doesn't include 'restaurant'
+      }
+
+      const coordinates = place.geometry.coordinates;
+      const londonBB =
+        coordinates[0] >= londonBbox[0] &&
+        coordinates[0] <= londonBbox[2] &&
+        coordinates[1] >= londonBbox[1] &&
+        coordinates[1] <= londonBbox[3];
+
+      return londonBB;
+    })
+
+
+
+    // Display markers for each place found within the London bounding box
+    filteredPlaces.forEach((place) => {
+      const placeCoordinates = place.geometry.coordinates;
+
+
+      // Add markers for each place
+      const newMarker = new mapboxgl.Marker()
+        .setLngLat(placeCoordinates)
+        .setPopup(new mapboxgl.Popup().setText(place.text))
+        .addTo(map);
+      markers.push(newMarker);
+    });
+  })
+  .catch(function(error){
+    console.error(error)
+    });
+
+
+}
+
+
+function searchFromInput() {
+  var searchText = $("#restaurant_name").val().trim(); // Replace "#search_input" with your actual input field ID
+  if (searchText !== "") {
+    performSearch(searchText);
+  }
+}
 
 
   // Suhaim Code
   // function to get value from input field
-  $("#search_btn").on("click",function(event){
-    event.preventDefault();
 
-    var restaurant_name = $("#restaurant_name").val().trim();
-    fetch_restaurant_details(restaurant_name);
-  });
+  // Event listener for search button click
+$("#search_btn").on("click", function(event) {
+  event.preventDefault();
+  var searchText = $("#restaurant_name").val().trim();
+
+  if (searchText !== "") {
+    // Call the function to fetch restaurant details
+    fetch_restaurant_details(searchText);
+  }
+});
+
 
   // Function to fetch data on the base of place id
   function fetch_restaurant_details(restaurant_name){
-  var apiKey="9888d85fa0msh0482bab6a69b4cfp140d5fjsn05ad00d194c0";
+  var apiKey="e1832098f3msh86ffcf963a57162p1e1a4fjsnf4a5c9eb3ca5";
 
   var url = "https://local-business-data.p.rapidapi.com/search?query="+restaurant_name+"london&language=en&rapidapi-key="+apiKey;
 
@@ -55,7 +120,7 @@ $(document).ready(function () {
     // console.log(data);
     var result = data.data[0];
     console.log(result);
-    
+
     display_restaurant_html(result);
   })
   .catch(function(error){
@@ -63,10 +128,21 @@ $(document).ready(function () {
   });
   }
 
- 
+
+
+  // Event listener for pressing 'Enter' key in the input field
+$("#search_input").on("keypress", function(event) {
+  if (event.which === 13) { // '13' represents the 'Enter' key
+    searchBasedOnInput();
+  }
+});
+
+
+
   // Function to update restaurant card UI
   function display_restaurant_html(details) {
   var restaurant = details;
+  console.log(restaurant)
 
   // Select the container where the restaurant card will be appended
   var restaurantsection = $('.restaurant_section');
@@ -91,7 +167,7 @@ $(document).ready(function () {
   var restaurant_number = restaurant.phone_number;
   var restaurant_website =  restaurant.website;
 
-  
+
 // getting the photo url from api
  var restaurant_photo = restaurant.photos_sample[0].photo_url_large;
 
@@ -137,7 +213,7 @@ zoomToLocation(customerLatitude, customerLongitude, restaurantName, restaurant_w
     </div>
   </div>
 
-     
+
   `);
   // assign value to modal function
   display_modal(restaurantName, restaurant_photo, restaurant_hours);
@@ -146,7 +222,7 @@ zoomToLocation(customerLatitude, customerLongitude, restaurantName, restaurant_w
   // Function to show opening hours of restaurant
   function display_modal(restaurantName, restaurant_photo, restaurant_hours){
 
-  $(".modal_section").append(` 
+  $(".modal_section").append(`
   // Modal Code
   <div id="modal_timetable" class="modal">
   <h3 class="modal_title">${restaurantName}</h3>
