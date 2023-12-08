@@ -27,159 +27,90 @@ $(document).ready(function () {
     zoom:11,
   });
 
-
-  // Initializes the Mapbox Geocoder
-  geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-    marker: true,
-    placeholder: "Search restaurants in London",
-    bbox: [-0.351708, 51.384527, 0.153177, 51.669993],
-    countries: "gb",
-  });
-
-  // Adds geocoder to the map
-  map.addControl(geocoder);
-
-  map.once("load", function () {
-    map.removeControl(geocoder);
-  });
-
-  geocoder.on("result", function (event) {
-    const coordinates = event.result.geometry.coordinates;
-
-    map.setCenter(coordinates);
-    map.setZoom(11);
-
-    // Clear existing markers
-    removeMarkers();
-
-    // Adding a single marker based on the search result
-    const place = event.result; // Define the 'place' variable
-    const newMarker = new mapboxgl.Marker()
-      .setLngLat(coordinates)
-      .setPopup(new mapboxgl.Popup().setHTML(`<a href="#">${place.text}</a>`))
-      .addTo(map);
-
-    markers.push(newMarker);
-  });
-
-  // Event listener for your form submission
-  $("#searchform").submit(function (e) {
-    e.preventDefault();
-
-    geocoder.clear();
-
-    const location = $("#restaurant_name").val().trim();
-
-    if (location === "") return;
-
-    // Clear existing markers before adding new ones
-    removeMarkers();
-
-    // Perform a search when the form is submitted
-    performSearch(location);
-  });
-
-  function performSearch(searchText) {
-    var londonBbox = [-0.510375, 51.50676, 0.334015, 51.691874]; // Bounding box for London
-    let apiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-      searchText
-    )}.json?access_token=${mapboxgl.accessToken}&bbox=${londonBbox.join(
-      ","
-    )}&categories=restaurant&type=poi`;
-
-    fetch(apiUrl)
-
-    .then((response) => response.json())
-    .then((data) => {
-      // Filter results to only include places within the London bounding box
-      const filteredPlaces = data.features.filter((place) => {
-
-        const isRestaurant = place.properties.category.includes('restaurant');
-        const coordinates = place.geometry.coordinates;
-        const londonBB =
-          coordinates[0] >= londonBbox[0] &&
-          coordinates[0] <= londonBbox[2] &&
-          coordinates[1] >= londonBbox[1] &&
-          coordinates[1] <= londonBbox[3]
-
-          return isRestaurant && londonBB;
-
-      });
-
-      // Display markers for each place found within the London bounding box
-      filteredPlaces.forEach((place) => {
-        const placeCoordinates = place.geometry.coordinates;
-
-
-        // Add markers for each place
-        const newMarker = new mapboxgl.Marker()
-          .setLngLat(placeCoordinates)
-          .setPopup(new mapboxgl.Popup().setText(place.text))
-          .addTo(map);
-
-// Suhaim Code
-  // Function to fetch restaurant details
-  // fetchRestaurant();
-  function fetchRestaurant() {
-
-
-        markers.push(newMarker);
-
-
-      });
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-
-    console.log(apiUrl);
-  }
 });
 
-// Suhaim Code
-// Function to fetch restaurant details
-fetchRestaurant();
-function fetchRestaurant() {
-  var apiKey = "eec2014a26msh690cd1a430a3f1dp18ead0jsn58b826e0a4d7";
+function performSearch(searchText) {
+  var londonBbox = [-0.510375, 51.50676, 0.334015, 51.691874]; // Bounding box for London
+  let apiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+    searchText
+  )}.json?access_token=${mapboxgl.accessToken}&bbox=${londonBbox.join(
+    ","
+  )}&categories=restaurant&type=poi&limit=7`;
 
-  var url =
-    "https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/getRestaurantDetails?restaurantsId=Restaurant_Review-g304554-d8010527-Reviews-Saptami-Mumbai_Maharashtra&currencyCode=USD&rapidapi-key=" +
-    apiKey;
+  fetch(apiUrl)
 
-  fetch(url)
-    .then(function (response) {
-      return response.json();
+  .then((response) => response.json())
+  .then((data) => {
+    // Filter results to only include places within the London bounding box
+    const filteredPlaces = data.features.filter((place) => {
+      const category = place.properties && place.properties.category; // Check if category exists
+      const isRestaurant = category && category.includes('restaurant'); // Check if category includes 'restaurant'
+
+      if (!category || !isRestaurant) {
+        return false; // Skip if category doesn't exist or doesn't include 'restaurant'
+      }
+
+      const coordinates = place.geometry.coordinates;
+      const londonBB =
+        coordinates[0] >= londonBbox[0] &&
+        coordinates[0] <= londonBbox[2] &&
+        coordinates[1] >= londonBbox[1] &&
+        coordinates[1] <= londonBbox[3];
+
+      return londonBB;
     })
-    .then(function (data) {
-      console.log(data);
-      display_restaurant_html(data);
-    })
-    .catch(function (error) {
-      console.error(error);
+
+
+
+    // Display markers for each place found within the London bounding box
+    filteredPlaces.forEach((place) => {
+      const placeCoordinates = place.geometry.coordinates;
+
+
+      // Add markers for each place
+      const newMarker = new mapboxgl.Marker()
+        .setLngLat(placeCoordinates)
+        .setPopup(new mapboxgl.Popup().setText(place.text))
+        .addTo(map);
+      markers.push(newMarker);
     });
+  })
+  .catch(function(error){
+    console.error(error)
+    });
+
+
 }
 
 
-// Suhaim Code
-// Function to update restaurant card UI
-function display_restaurant_html(details) {
-  var restaurant = details.data;
-  console.log(restaurant);
+function searchFromInput() {
+  var searchText = $("#restaurant_name").val().trim(); // Replace "#search_input" with your actual input field ID
+  if (searchText !== "") {
+    performSearch(searchText);
+  }
+}
+
 
   // Suhaim Code
   // function to get value from input field
-  $("#search_btn").on("click",function(){
-    var restaurant_name = $("#restaurant_name").val().trim();
-    fetch_restaurant_details(restaurant_name);
-  });
+
+  // Event listener for search button click
+$("#search_btn").on("click", function(event) {
+  event.preventDefault();
+  var searchText = $("#restaurant_name").val().trim();
+
+  if (searchText !== "") {
+    // Call the function to fetch restaurant details
+    fetch_restaurant_details(searchText);
+  }
+});
+
 
   // Function to fetch data on the base of place id
   function fetch_restaurant_details(restaurant_name){
-  var apiKey="9888d85fa0msh0482bab6a69b4cfp140d5fjsn05ad00d194c0";
+  var apiKey="e1832098f3msh86ffcf963a57162p1e1a4fjsnf4a5c9eb3ca5";
 
-  var url = "https://local-business-data.p.rapidapi.com/search?query="+restaurant_name+"&language=en&rapidapi-key="+apiKey;
+  var url = "https://local-business-data.p.rapidapi.com/search?query="+restaurant_name+"london&language=en&rapidapi-key="+apiKey;
 
 
   fetch(url).then(function(response){
@@ -197,11 +128,21 @@ function display_restaurant_html(details) {
   });
   }
 
-  // Suhaim Code
+
+
+  // Event listener for pressing 'Enter' key in the input field
+$("#search_input").on("keypress", function(event) {
+  if (event.which === 13) { // '13' represents the 'Enter' key
+    searchBasedOnInput();
+  }
+});
+
+
+
   // Function to update restaurant card UI
   function display_restaurant_html(details) {
   var restaurant = details;
-
+  console.log(restaurant)
 
   // Select the container where the restaurant card will be appended
   var restaurantsection = $('.restaurant_section');
@@ -210,9 +151,9 @@ function display_restaurant_html(details) {
   restaurantsection.empty();
 
   // Getting value from the api
-  var restaurantName = restaurant.location.name;
-  var restaurant_address = restaurant.location.address;
-  var restaurantDes = restaurant.location.description;
+  var restaurantName = restaurant.name;
+  var restaurant_address = restaurant.full_address;
+  var restaurantDes = restaurant.about.summary;
 
   // =======================
   // For In hours string remove today
@@ -245,7 +186,7 @@ zoomToLocation(customerLatitude, customerLongitude, restaurantName, restaurant_w
     <!-- Restaurant card -->
     <div class="restaurant_card">
       <div class="row">
-        <div class="col-md-8 col-12">
+        <div class="col-lg-8 col-md-12">
           <div class="restaurant_left_side">
             <!-- Restaurant name -->
             <h3 class="restaurant_name">${restaurantName}</h3>
@@ -263,7 +204,7 @@ zoomToLocation(customerLatitude, customerLongitude, restaurantName, restaurant_w
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-12">
+        <div class="col-lg-4 col-md-12 ">
           <div class="restaurant_right_side">
             <img src="${restaurant_photo}" class="restaurant_photo" alt="Restaurant Image" />
           </div>
@@ -333,10 +274,54 @@ zoomToLocation(customerLatitude, customerLongitude, restaurantName, restaurant_w
   feedback: FeedBack_text,
   };
 
-  var Json_String = JSON.stringify(feedbackData);
-  localStorage.setItem("Restaurants", Json_String);
-});
+  // Retrieve existing data from local storage
+  var existingData = localStorage.getItem("Restaurants");
+
+  // If there is existing data, parse it; otherwise, create an empty array
+  var feedbackArray;
+
+  if (existingData) {
+  try {
+  feedbackArray = JSON.parse(existingData);
+
+  // Make sure feedbackArray is an array
+  if (!Array.isArray(feedbackArray)) {
+    feedbackArray = [];
+    console.error("existingData is not a valid array.");
+  }
+  } catch (error) {
+  feedbackArray = [];
+  console.error("Error parsing existingData:", error);
+  }
+  } else {
+  feedbackArray = [];
+  }
+
+  // Add the current feedback to the array
+  feedbackArray.push(feedbackData);
+
+  // Convert the array back to JSON and store it in local storage
+  localStorage.setItem("Restaurants", JSON.stringify(feedbackArray));
+
+  });
+
+  // Function to zoom in to the map
+  function zoomToLocation(latitude, longitude, name ,website) {
+    map.flyTo({
+      center: [longitude, latitude],
+      zoom: 15,
+      essential: true,
+    });
+    addMarker(latitude, longitude, name ,website)
+  }
 
 
+  // Function to add a marker
+  function addMarker(latitude, longitude, name, website) {
+  // Display a marker at the specified coordinates
+  const newMarker = new mapboxgl.Marker().setLngLat({ lng: longitude, lat: latitude })
 
+  .setPopup(new mapboxgl.Popup().setHTML(`<a href="${website}" target="_blank">${name}</a>`)).addTo(map);
 
+  markers.push(newMarker);
+}
